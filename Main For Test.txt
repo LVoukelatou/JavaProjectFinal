@@ -1,0 +1,34 @@
+Main For Test
+
+import com.triviaapi.TriviaAPIClient;
+import com.triviaapi.models.Question;
+import com.triviaapi.TriviaAPIException;
+
+import java.util.List;
+public class MainForTest {
+	public static void main(String[] args) {
+        // Δημιουργία instance του TriviaAPIClient
+        TriviaAPIClient triviaAPIClient = new TriviaAPIClient();
+
+        try {
+            // Κλήση για ανάκτηση 5 ερωτήσεων πολλαπλής επιλογής
+            List<Question> questions = triviaAPIClient.fetchQuestions(5, null, "medium", "multiple");
+
+            // Εμφάνιση των ερωτήσεων που ανακτήθηκαν
+            System.out.println("Ερωτήσεις:");
+            for (Question question : questions) {
+                System.out.println("Κατηγορία: " + question.getCategory());
+                System.out.println("Ερώτηση: " + question.getQuestion());
+                System.out.println("Σωστή Απάντηση: " + question.getCorrectAnswer());
+                System.out.println("Λανθασμένες Απαντήσεις: ");
+                for (String incorrectAnswer : question.getIncorrectAnswers()) {
+                    System.out.println("- " + incorrectAnswer);
+                }
+                System.out.println("----------");
+            }
+
+        } catch (TriviaAPIException e) {
+            System.err.println("Προέκυψε σφάλμα κατά την ανάκτηση ερωτήσεων: " + e.getMessage());
+        }
+    }
+}
